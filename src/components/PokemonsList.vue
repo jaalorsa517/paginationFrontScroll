@@ -3,9 +3,9 @@ import { onBeforeMount, ref, onMounted, onUnmounted } from "vue";
 import cardPokemon from "./Card.vue";
 
 const uri = "https://pokeapi.co/api/v2/pokemon/";
+const limit = 20;
 let pokemons = ref(Array.from({ length: 20 }, (v, i) => ({ name: "", img: "" })));
 let page = ref(0);
-const limit = 20;
 let hasMore = ref(false);
 let isLoading = ref(false);
 
@@ -34,7 +34,7 @@ async function fetchPokemons(_page) {
 }
 function scrolling({ target }) {
   const { scrollingElement } = target;
-  const gap = 40;
+  const gap = 60;
   if (scrollingElement.scrollTop + scrollingElement.clientHeight + gap >= scrollingElement.scrollHeight) {
     const button = document.querySelector(".click__button");
     button?.click();

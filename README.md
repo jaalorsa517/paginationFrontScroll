@@ -6,4 +6,4 @@ Proyecto que pretende demostrar las habilidades para maquetar y consumir una API
 
 ## Demo
 
-El proyecto se puede probar en https://pokemonpaginationscroll.jaalorsa.com/ || http://pokemonpaginationscroll.netlify.app
+El proyecto se puede probar en https://pokemonpaginationscroll.jaalorsa.com/
