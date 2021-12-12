@@ -5,7 +5,7 @@ import cardPokemon from "./Card.vue";
 const uri = "https://pokeapi.co/api/v2/pokemon/";
 let pokemons = ref(Array.from({ length: 20 }, (v, i) => ({ name: "", img: "" })));
 let page = ref(0);
-const limit = 10;
+const limit = 20;
 let hasMore = ref(false);
 let isLoading = ref(false);
 
