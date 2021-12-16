@@ -1,17 +1,16 @@
 <script setup>
-import { onBeforeMount, ref, onMounted, onUnmounted } from "vue";
+import { onBeforeMount, onMounted, onUnmounted, ref } from "vue";
 import cardPokemon from "./Card.vue";
 
 const uri = "https://pokeapi.co/api/v2/pokemon/";
 const limit = 20;
-let pokemons = ref(Array.from({ length: 20 }, (v, i) => ({ name: "", img: "" })));
+let pokemons = ref(Array.from({ length: 20 }, (v, i) => ({ id: "", name: "", img: "", types: "" })));
 let page = ref(0);
 let hasMore = ref(false);
 let isLoading = ref(false);
 
-function getSkip(_page) {
-  return _page * limit;
-}
+const getSkip = (_page) => _page * limit;
+
 async function fetchPokemons(_page) {
   isLoading.value = true;
   const response = await fetch(`${uri}?limit=${limit}&offset=${getSkip(_page)}`);
@@ -32,6 +31,13 @@ async function fetchPokemons(_page) {
   isLoading.value = false;
   return result;
 }
+
+async function moreData() {
+  page.value++;
+  const newPokemons = await fetchPokemons(page.value);
+  pokemons.value = [...pokemons.value, ...newPokemons];
+}
+
 function scrolling({ target }) {
   const { scrollingElement } = target;
   const gap = 60;
@@ -40,17 +46,15 @@ function scrolling({ target }) {
     button?.click();
   }
 }
-async function moreData() {
-  page.value++;
-  const newPokemons = await fetchPokemons(page.value);
-  pokemons.value = [...pokemons.value, ...newPokemons];
-}
+
 onBeforeMount(async () => {
   pokemons.value = await fetchPokemons(page.value);
 });
+
 onMounted(() => {
   window.addEventListener("scroll", scrolling);
 });
+
 onUnmounted(() => {
   window.removeEventListener("scroll", scrolling);
 });
@@ -63,7 +67,7 @@ onUnmounted(() => {
   </div>
   <div class="app__container">
     <div class="spinner" v-if="isLoading"></div>
-    <a class="click__button app__more" @click="moreData" v-if="hasMore && !isLoading">Ver más</a>
+    <a href="" class="click__button app__more" v-if="hasMore && !isLoading" @click.prevent="moreData">Ver más</a>
   </div>
 </template>
 
