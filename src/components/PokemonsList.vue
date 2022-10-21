@@ -1,35 +1,25 @@
 <script setup>
 import { onBeforeMount, onMounted, onUnmounted, ref } from "vue";
+import { getPokemonsRaw, getSkip, getPokemonsInfo } from "../shared/services/Pokemon.service";
 import cardPokemon from "./Card.vue";
 
-const uri = "https://pokeapi.co/api/v2/pokemon/";
-const limit = 20;
 let pokemons = ref(Array.from({ length: 20 }, (v, i) => ({ id: "", name: "", img: "", types: "" })));
 let page = ref(0);
 let hasMore = ref(false);
 let isLoading = ref(false);
 
-const getSkip = (_page) => _page * limit;
-
-async function fetchPokemons(_page) {
-  isLoading.value = true;
-  const response = await fetch(`${uri}?limit=${limit}&offset=${getSkip(_page)}`);
-  const pokemonsRaw = await response.json();
-  hasMore.value = pokemonsRaw.count > getSkip(_page);
-  const result = await Promise.all(
-    pokemonsRaw.results.map(async (pokemon) => {
-      const response = await fetch(pokemon.url);
-      const pokemonRaw = await response.json();
-      return {
-        id: pokemonRaw.id,
-        name: pokemonRaw.name,
-        img: pokemonRaw.sprites.other["official-artwork"].front_default,
-        type: pokemonRaw.types[0].type.name,
-      };
-    })
-  );
-  isLoading.value = false;
-  return result;
+async function fetchPokemons(page) {
+  try {
+    isLoading.value = true;
+    const pokemonsRaw = await getPokemonsRaw({ page });
+    hasMore.value = pokemonsRaw.count > getSkip(page);
+    const promisesGetPokemon = await getPokemonsInfo({ urls: pokemonsRaw.results });
+    isLoading.value = false;
+    return promisesGetPokemon;
+  } catch (error) {
+    isLoading.value = false;
+    return [];
+  }
 }
 
 async function moreData() {
@@ -67,7 +57,9 @@ onUnmounted(() => {
   </div>
   <div class="app__container">
     <div class="spinner" v-if="isLoading"></div>
-    <a href="" class="click__button app__more" v-if="hasMore && !isLoading" @click.prevent="moreData">Ver más</a>
+    <a href="" class="click__button app__more" v-if="hasMore && !isLoading" @click.prevent="moreData">
+      Ver más
+    </a>
   </div>
 </template>
 
