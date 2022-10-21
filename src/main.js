@@ -1,4 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { registerSW } from "virtual:pwa-register";
 
-createApp(App).mount('#app')
+const updateSW = registerSW({
+  onNeedRefresh() {},
+  onOfflineReady() {},
+});
+
+createApp(App).mount("#app");
