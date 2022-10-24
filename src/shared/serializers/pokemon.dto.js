@@ -6,3 +6,7 @@ export function pokemonCardDto(pokemonRaw) {
     type: pokemonRaw.types[0].type.name || "",
   };
 }
+
+export function pokemonCardDtoDefault() {
+  return pokemonCardDto({});
+}

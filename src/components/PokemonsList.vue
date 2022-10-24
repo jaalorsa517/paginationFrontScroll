@@ -1,63 +1,28 @@
 <script setup>
-import { onBeforeMount, onMounted, onUnmounted, ref } from "vue";
-import { getPokemonsRaw, getSkip, getPokemonsInfo } from "../shared/services/Pokemon.service";
+import { onBeforeMount } from "vue";
 import cardPokemon from "./Card.vue";
+import { usePokemon } from "../store/usePokemon.store";
 
-let pokemons = ref(Array.from({ length: 20 }, (v, i) => ({ id: "", name: "", img: "", types: "" })));
-let page = ref(0);
-let hasMore = ref(false);
-let isLoading = ref(false);
+const pokemonStore = usePokemon();
 
-async function fetchPokemons(page) {
-  try {
-    isLoading.value = true;
-    const pokemonsRaw = await getPokemonsRaw({ page });
-    hasMore.value = pokemonsRaw.count > getSkip(page);
-    const promisesGetPokemon = await getPokemonsInfo({ urls: pokemonsRaw.results });
-    isLoading.value = false;
-    return promisesGetPokemon;
-  } catch (error) {
-    isLoading.value = false;
-    return [];
-  }
-}
-
-async function moreData() {
-  page.value++;
-  const newPokemons = await fetchPokemons(page.value);
-  pokemons.value = [...pokemons.value, ...newPokemons];
-}
-
-function scrolling({ target }) {
-  const { scrollingElement } = target;
-  const gap = 60;
-  if (scrollingElement.scrollTop + scrollingElement.clientHeight + gap >= scrollingElement.scrollHeight) {
-    const button = document.querySelector(".click__button");
-    button?.click();
-  }
-}
-
-onBeforeMount(async () => {
-  pokemons.value = await fetchPokemons(page.value);
-});
-
-onMounted(() => {
-  window.addEventListener("scroll", scrolling);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", scrolling);
+onBeforeMount( () => {
+  pokemonStore.firtsFetchPokemons();
 });
 </script>
 
 <template>
   <h2 class="app__title">Los pokemons</h2>
   <div class="app__view">
-    <cardPokemon v-for="pokemon in pokemons" :key="pokemon.name" :info="pokemon" />
+    <cardPokemon v-for="pokemon in pokemonStore.pokemons" :key="pokemon.name" :info="pokemon" />
   </div>
   <div class="app__container">
-    <div class="spinner" v-if="isLoading"></div>
-    <a href="" class="click__button app__more" v-if="hasMore && !isLoading" @click.prevent="moreData">
+    <div class="spinner" v-if="pokemonStore.isLoading"></div>
+    <a
+      href=""
+      class="click__button app__more"
+      v-if="pokemonStore.hasMore && !pokemonStore.isLoading"
+      @click.prevent="pokemonStore.moreData"
+    >
       Ver más
     </a>
   </div>
