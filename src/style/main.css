@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+}
+body {
+  --color_font: #2c3e50;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color_font);
+}
+
+.skeleton {
+  animation: skeleton-animation 1.2s linear infinite alternate;
+}
+
+.spinner {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 5px solid rgb(2, 139, 59);
+  border-top-color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 20px);
+  animation: spinner-animation 1.2s linear infinite;
+}
+@keyframes skeleton-animation {
+  0% {
+    background-color: hsl(0, 0%, 70%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+@keyframes spinner-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+[type] {
+  width: fit-content;
+  padding: 0.3em;
+  font-weight: 700;
+  font-size: 0.9em;
+  border-radius: 2px;
+  margin: 0.3em;
+}
+[type="normal"] {
+  background-color: #a8a090;
+}
+[type="fighting"] {
+  background-color: #a05038;
+}
+[type="flying"] {
+  background-color: #98a8f0;
+}
+[type="poison"] {
+  background-color: #b058a0;
+}
+[type="ground"] {
+  background-color: #e9d6a4;
+}
+[type="rock"] {
+  background-color: #b8a058;
+}
+[type="bug"] {
+  background-color: #a8b820;
+}
+[type="ghost"] {
+  background-color: #6060b0;
+}
+[type="steel"] {
+  background-color: #a8a8c0;
+}
+[type="fire"] {
+  background-color: #f05030;
+}
+[type="water"] {
+  background-color: #3899f8;
+}
+[type="grass"] {
+  background-color: #78c850;
+}
+[type="electric"] {
+  background-color: #f8d030;
+}
+[type="psychic"] {
+  background-color: #f870a0;
+}
+[type="ice"] {
+  background-color: #58c8e0;
+}
+[type="dragon"] {
+  background-color: #7860e0;
+}
+[type="dark"] {
+  background-color: #7a5848;
+}
+[type="fairy"] {
+  background-color: #e79fe7;
+}
+[type="unknown"] {
+  background-color: #2c3e50;
+}
+[type="shadow"] {
+  background-color: #391075;
+}
+[type="undefined"] {
+  background-color: #2c3e50;
+}

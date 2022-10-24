@@ -3,14 +3,11 @@ export function pokemonCardDto(pokemonRaw) {
     id: pokemonRaw.id || "",
     name: pokemonRaw.name || "",
     img: pokemonRaw.sprites.other["official-artwork"].front_default || "",
-    types: pokemonRaw.types || [],
+    types: pokemonRaw.types?.map((type) => type.type.name) || [],
     type: pokemonRaw.types[0].type.name || "",
     height: pokemonRaw.height || "",
     weight: pokemonRaw.weight || "",
     speciesUrl: pokemonRaw.species.url || "",
-    is_legendary: pokemonRaw.is_legendary || "",
-    is_baby: pokemonRaw.is_baby || "",
-    is_mythical: pokemonRaw.is_mythical || "",
   };
 }
 
@@ -19,13 +16,19 @@ export function pokemonCardDtoDefault() {
 }
 
 export function pokemonSpecieDTO(pokemonRaw) {
+  const featuresRaw =
+    pokemonRaw.flavor_text_entries
+      .filter((text) => text.language.name === "es")
+      .map((text) => text.flavor_text) || [];
+  const features = Array.from(new Set(featuresRaw));
+
   return {
-    genera: pokemonRaw.genera.find((genus) => genus.language.name === "es") || "",
+    genera: pokemonRaw.genera?.find((genus) => genus.language.name === "es")?.genus || "",
     evolution: pokemonRaw.evolution_chain.url || "",
-    description:
-      pokemonRaw.flavor_text_entries
-        .filter((text) => text.language.name === "es")
-        .map((text) => text.flavor_text) || [],
+    is_legendary: pokemonRaw.is_legendary || "",
+    is_baby: pokemonRaw.is_baby || "",
+    is_mythical: pokemonRaw.is_mythical || "",
+    features,
   };
 }
 

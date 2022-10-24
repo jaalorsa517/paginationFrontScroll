@@ -1,22 +1,30 @@
 <script setup>
 import { ref, watchEffect } from "vue";
-import dic from "@/js/dictionary";
+import {colorsType} from "@/js/dictionary";
+import {useRouter} from 'vue-router';
 
 const props = defineProps({
   info: Object,
 });
+
+const router = useRouter();
+
 const isLoad = ref(false);
 const card = ref(null);
 
 watchEffect(() => {
   if (isLoad.value) {
-    card.value.style.borderColor = dic.colorsType[props.info.type];
+    card.value.style.borderColor = colorsType[props.info.type];
   }
 });
+
+function goDetails() {
+  router.push({ name: "Details", params: { id: props.info.id } });
+}
 </script>
 
 <template>
-  <div class="card" ref="card">
+  <div class="card" ref="card" @click="goDetails">
     <div class="card__details">
       <div class="card__number">
         <div class="skeleton card__skeleton card__skeleton--number" v-if="!isLoad"></div>

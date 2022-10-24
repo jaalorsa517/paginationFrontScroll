@@ -16,11 +16,17 @@ export async function getPokemonsRaw({ page = 0 } = {}) {
   return response;
 }
 
-export async function getPokemonsInfo({ urls = [] } = {}) {
-  const pokemonsPromise = urls.map(async ({ url }) => {
-    const pokemonRaw = await httpGet(url);
+export async function getPokemonInfo({ url, id }) {
+  if (url || id) {
+    const _url = url || `${uri}/pokemon/${id}`;
+    const pokemonRaw = await httpGet(_url);
     return pokemonCardDto(pokemonRaw);
-  });
+  }
+  return {};
+}
+
+export async function getPokemonsInfo({ urls = [] } = {}) {
+  const pokemonsPromise = urls.map(getPokemonInfo);
   const response = await Promise.all(pokemonsPromise);
   return response;
 }
