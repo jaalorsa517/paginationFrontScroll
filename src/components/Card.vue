@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watchEffect } from "vue";
-import dic from "../js/dictionary";
+import dic from "@/js/dictionary";
 
 const props = defineProps({
   info: Object,
@@ -42,6 +42,7 @@ watchEffect(() => {
   box-shadow: 1px 1px 5px #c3c3c3;
   border-top: 7px solid #2c3e50;
   transition: border 600ms;
+  cursor: pointer;
 }
 .card__details {
   position: relative;

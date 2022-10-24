@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { pokemonCardDtoDefault } from "../shared/serializers/pokemon.dto";
-import { getPokemonsInfo, getSkip, getPokemonsRaw } from "../shared/services/Pokemon.service";
+import { pokemonCardDtoDefault } from "@/shared/serializers/pokemon.dto";
+import { getPokemonsInfo, getSkip, getPokemonsRaw } from "@/shared/services/Pokemon.service";
 
 export const usePokemon = defineStore("pokemons", {
   state: () => ({

@@ -1,11 +1,6 @@
-<script setup>
-import PokemonsListVue from "./components/PokemonsList.vue";
-</script>
-
 <template>
-  <div class="app">
-    <PokemonsListVue />
-  </div>
+<router-view></router-view>
+  
 </template>
 
 <style>

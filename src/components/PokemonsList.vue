@@ -1,7 +1,7 @@
 <script setup>
 import { onBeforeMount } from "vue";
-import cardPokemon from "./Card.vue";
-import { usePokemon } from "../store/usePokemon.store";
+import cardPokemon from "@/components/Card.vue";
+import { usePokemon } from "@/store/usePokemon.store";
 
 const pokemonStore = usePokemon();
 
