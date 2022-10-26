@@ -1,6 +1,7 @@
 <script setup>
 import { onBeforeMount, reactive, computed, ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import ImageSkeletonVue from "@/components/ImageSkeleton.vue";
 import { getEvolution, getPokemonInfo, getSpecie } from "@/shared/services/Pokemon.service";
 import { langagueES } from "@/js/dictionary";
 import { useRoot } from "@/store/useRoot.store";
@@ -28,6 +29,12 @@ const height = computed(() => {
 const weight = computed(() => {
   const weigth = parseInt(pokemon.info.weight);
   return `${(weigth * 100) / 1000}kg`;
+});
+const sizeSkeletonImgPrincipal = computed(() => {
+  return rootStore.isMobile ? "272px" : "450px";
+});
+const sizeSkeletonImgCarousel = computed(() => {
+  return rootStore.isMobile ? "200px" : "500px";
 });
 
 watchEffect(() => {
@@ -133,7 +140,12 @@ onBeforeMount(() => {
         <span class="details__id">{{ pokemon.info.id }}</span>
         <h1 class="details__title">{{ title }}</h1>
         <div class="details__image">
-          <img :src="pokemon.info.img" :alt="pokemon.info.name" />
+          <ImageSkeletonVue
+            :src="pokemon.info.img"
+            :alt="pokemon.info.name"
+            :width="sizeSkeletonImgPrincipal"
+            :height="sizeSkeletonImgPrincipal"
+          ></ImageSkeletonVue>
         </div>
         <div class="details__types">
           <div class="details__type" v-for="(type, index) in pokemon.info.types" :key="index" :type="type">
@@ -189,7 +201,12 @@ onBeforeMount(() => {
             @click="goPokemon(pokemon.id)"
           >
             <div class="details__img">
-              <img :src="pokemon.url" :alt="pokemon.name" />
+              <ImageSkeletonVue
+                :src="pokemon.url"
+                :alt="pokemon.name"
+                :width="sizeSkeletonImgCarousel"
+                :height="sizeSkeletonImgCarousel"
+              ></ImageSkeletonVue>
             </div>
             <h3 class="details__namePokemon">
               <span class="details__idSlide">{{ pokemon.id }}</span>
@@ -208,7 +225,12 @@ onBeforeMount(() => {
             @click="goPokemon(pokemon.id)"
           >
             <div class="details__img">
-              <img :src="pokemon.url" :alt="pokemon.name" />
+              <ImageSkeletonVue
+                :src="pokemon.url"
+                :alt="pokemon.name"
+                :width="sizeSkeletonImgCarousel"
+                :height="sizeSkeletonImgCarousel"
+              ></ImageSkeletonVue>
             </div>
             <h3 class="details__namePokemon">
               <span class="details__idSlide">{{ pokemon.id }}</span>
