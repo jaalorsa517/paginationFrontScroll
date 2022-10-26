@@ -1,42 +1,40 @@
 <script setup>
 import { onBeforeMount, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { getPokemonInfo, getSpecie } from "@/shared/services/Pokemon.service";
+import { getEvolution, getPokemonInfo, getSpecie } from "@/shared/services/Pokemon.service";
 import { langagueES } from "@/js/dictionary";
 
 const route = useRoute();
 const router = useRouter();
-const pokemon = reactive({ info: {}, specie: {} });
+const pokemon = reactive({ info: {}, specie: {}, evolutions: {} });
 
 const isLoaded = computed(() => {
   return pokemon.info.id;
 });
-
 const title = computed(() => {
   if (pokemon.info.name) {
     return toCamelCase(pokemon.info.name);
   }
   return "";
 });
-
 const height = computed(() => {
   const height = parseInt(pokemon.info.height);
   return `${height / 10}m`;
 });
-
 const weight = computed(() => {
   const weigth = parseInt(pokemon.info.weight);
   return `${(weigth * 100) / 1000}kg`;
 });
 
+function goBack() {
+  router.back();
+}
 function translateType(type) {
   return langagueES[type];
 }
-
 function translateBoolean(value) {
   return value ? "Si" : "No";
 }
-
 function toCamelCase(text) {
   return text.slice(0, 1).toUpperCase() + text.slice(1);
 }
@@ -44,15 +42,17 @@ function toCamelCase(text) {
 onBeforeMount(async () => {
   const id = route.params.id;
   if (!id) router.push({ name: "Home" });
-  const _pokemon = await getPokemonInfo({ id });
-  const details = await getSpecie({ url: _pokemon.speciesUrl });
-  pokemon.info = _pokemon;
+  const pokemonInfo = await getPokemonInfo({ id });
+  const details = await getSpecie({ url: pokemonInfo.speciesUrl });
+  // const evolutions = await getEvolution({ url: details.evolution });
+  pokemon.info = pokemonInfo;
   pokemon.specie = details;
+  // pokemon.evolutions = evolutions;
 });
 </script>
 <template>
   <section class="details">
-    <section class="details__goBack" @click="router.replace({ name: 'Home' })">
+    <section class="details__goBack" @click="goBack">
       <span class="details__arrow">&#129044;</span>
       <span class="details__textBack">Atras</span>
     </section>
@@ -116,7 +116,7 @@ onBeforeMount(async () => {
 
 <style>
 .details {
-  max-width: 1024px;
+  max-width: 540px;
   margin: auto;
 }
 .details__goBack {
@@ -170,10 +170,11 @@ onBeforeMount(async () => {
   justify-content: center;
   align-items: center;
 }
-.details__secondary{
+.details__primary,
+.details__secondary {
   padding: 0.5em;
 }
-.details__detail{
+.details__detail {
   margin: 0.5em 0;
 }
 .details__label {
@@ -185,11 +186,16 @@ onBeforeMount(async () => {
 .details__label::after {
   content: ":";
 }
-.details__descriptions{
+.details__descriptions {
   padding: 0.5em 1.5em;
 }
-.details__description{
+.details__description {
   margin: 0.5em 0;
   list-style: disclosure-closed;
+}
+@media screen and (min-width: 768px) {
+  .details {
+    max-width: 768px;
+  }
 }
 </style>

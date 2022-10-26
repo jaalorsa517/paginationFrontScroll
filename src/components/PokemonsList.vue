@@ -5,8 +5,8 @@ import { usePokemon } from "@/store/usePokemon.store";
 
 const pokemonStore = usePokemon();
 
-onBeforeMount( () => {
-  pokemonStore.firtsFetchPokemons();
+onBeforeMount(() => {
+  if (pokemonStore.pokemons.length <= 20) pokemonStore.firtsFetchPokemons();
 });
 </script>
 
