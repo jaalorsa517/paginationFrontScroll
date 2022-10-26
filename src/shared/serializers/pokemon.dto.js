@@ -33,7 +33,7 @@ export function pokemonSpecieDTO(pokemonRaw) {
 }
 
 function getId(url) {
-  return url.match(/[^\/][^\W](\d+)/g)?.at(0);
+  return url.match(/\d+/g)?.at(1);
 }
 
 function getEvolution({ species, evolves_to }) {
@@ -42,7 +42,7 @@ function getEvolution({ species, evolves_to }) {
   });
   const id = getId(species.url);
   const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-  return { name: species.name, url, evolutions };
+  return { name: species.name, id, url, evolutions: evolutions.sort((a, b) => a.id > b.id) };
 }
 
 export function pokemonEvolutionDTO(pokemonRaw) {

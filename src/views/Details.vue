@@ -1,12 +1,16 @@
 <script setup>
-import { onBeforeMount, reactive, computed } from "vue";
+import { onBeforeMount, reactive, computed, ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getEvolution, getPokemonInfo, getSpecie } from "@/shared/services/Pokemon.service";
 import { langagueES } from "@/js/dictionary";
+import { useRoot } from "@/store/useRoot.store";
 
 const route = useRoute();
 const router = useRouter();
-const pokemon = reactive({ info: {}, specie: {}, evolutions: {} });
+const rootStore = useRoot();
+const prevolution = ref(null);
+const evolution = ref(null);
+const pokemon = reactive({ info: {}, specie: {}, prevolutions: [], evolutions: [] });
 
 const isLoaded = computed(() => {
   return pokemon.info.id;
@@ -26,8 +30,31 @@ const weight = computed(() => {
   return `${(weigth * 100) / 1000}kg`;
 });
 
+watchEffect(() => {
+  const arrowsEvolution = evolution.value?.getElements(".j5-carousel__arrow") || [];
+  if (pokemon.evolutions.length === 1 || (pokemon.evolutions.length === 2 && !rootStore.isMobile)) {
+    arrowsEvolution.forEach((arrow) => {
+      arrow.style.display = "none";
+    });
+  } else {
+    arrowsEvolution.forEach((arrow) => (arrow.style.display = "flex"));
+  }
+
+  const arrowsPrevolution = prevolution.value?.getElements(".j5-carousel__arrow") || [];
+  if (pokemon.prevolutions.length === 1 || (pokemon.prevolutions.length === 2 && !rootStore.isMobile)) {
+    arrowsPrevolution.forEach((arrow) => (arrow.style.display = "none"));
+  } else {
+    arrowsPrevolution.forEach((arrow) => (arrow.style.display = "flex"));
+  }
+});
+
 function goBack() {
   router.back();
+}
+async function goPokemon(id) {
+  await router.push({ name: "Details", params: { id: id } });
+  window.scrollTo(0, 0);
+  await init();
 }
 function translateType(type) {
   return langagueES[type];
@@ -38,23 +65,60 @@ function translateBoolean(value) {
 function toCamelCase(text) {
   return text.slice(0, 1).toUpperCase() + text.slice(1);
 }
+function getPrevolution({ name, url, id, evolutions }, prevolutions = [], brothers = []) {
+  if (pokemon.info.name === name) {
+    return prevolutions;
+  }
 
-onBeforeMount(async () => {
+  const isMe = brothers.length > 1 ? brothers.some((brother) => brother.name === name) : false;
+  if (!isMe) {
+    prevolutions.push({ name, url, id });
+  }
+
+  if (evolutions.length) {
+    evolutions.forEach((evolution) => {
+      getPrevolution(evolution, prevolutions, evolutions);
+    });
+  }
+  return prevolutions;
+}
+function getPostEvolutions({ name, url, id, evolutions }, postEvolutions = [], brothers = []) {
+  const hashBrothers = brothers.some((brother) => brother.name === pokemon.info.name);
+  const hashPrevolution = pokemon.prevolutions.some((pokemon) => pokemon.name === name);
+  if (!hashPrevolution && pokemon.info.name !== name && !hashBrothers) {
+    postEvolutions.push({ name, url, id });
+  }
+  if (evolutions.length) {
+    const brothersNext = [...evolutions];
+    evolutions.forEach((evolution) => {
+      getPostEvolutions(evolution, postEvolutions, brothersNext);
+    });
+  }
+  return postEvolutions;
+}
+async function init() {
   const id = route.params.id;
   if (!id) router.push({ name: "Home" });
   const pokemonInfo = await getPokemonInfo({ id });
-  const details = await getSpecie({ url: pokemonInfo.speciesUrl });
-  // const evolutions = await getEvolution({ url: details.evolution });
   pokemon.info = pokemonInfo;
+  const details = await getSpecie({ url: pokemonInfo.speciesUrl });
   pokemon.specie = details;
-  // pokemon.evolutions = evolutions;
+  const evolutions = await getEvolution({ url: details.evolution });
+  const prevolutions = getPrevolution(evolutions);
+  pokemon.prevolutions = prevolutions;
+  const postEvolutions = getPostEvolutions(evolutions);
+  pokemon.evolutions = postEvolutions;
+}
+
+onBeforeMount(() => {
+  init();
 });
 </script>
 <template>
   <section class="details">
     <section class="details__goBack" @click="goBack">
       <span class="details__arrow">
-        <svg  viewBox="0 0 500 500" >
+        <svg viewBox="0 0 500 500">
           <g>
             <path
               d="M487.267,225.981c0-17.365-13.999-31.518-31.518-31.518H194.501L305.35,83.615c12.24-12.24,12.24-32.207,0-44.676 L275.592,9.18c-12.24-12.24-32.207-12.24-44.676,0L15.568,224.527c-6.12,6.12-9.256,14.153-9.256,22.262 c0,8.032,3.136,16.142,9.256,22.262l215.348,215.348c12.24,12.239,32.207,12.239,44.676,0l29.758-29.759 c12.24-12.24,12.24-32.207,0-44.676L194.501,299.498h261.094c17.366,0,31.519-14.153,31.519-31.519L487.267,225.981z"
@@ -115,6 +179,44 @@ onBeforeMount(async () => {
           </ul>
         </div>
       </div>
+      <section class="details__container" v-if="pokemon.prevolutions.length">
+        <h2 class="details__title">Pre-Evoluciones</h2>
+        <j5-carousel class="details__carousel" :count-slides="rootStore.isMobile ? 1 : 2" ref="prevolution">
+          <div
+            class="details__slide"
+            v-for="(pokemon, index) in pokemon.prevolutions"
+            :key="`${pokemon.name}-${index}`"
+            @click="goPokemon(pokemon.id)"
+          >
+            <div class="details__img">
+              <img :src="pokemon.url" :alt="pokemon.name" />
+            </div>
+            <h3 class="details__namePokemon">
+              <span class="details__idSlide">{{ pokemon.id }}</span>
+              <span class="details__nameSlide">{{ toCamelCase(pokemon.name) }}</span>
+            </h3>
+          </div>
+        </j5-carousel>
+      </section>
+      <section class="details__container" v-if="pokemon.evolutions.length">
+        <h2 class="details__title">Evoluciones</h2>
+        <j5-carousel class="details__carousel" :count-slides="rootStore.isMobile ? 1 : 2" ref="evolution">
+          <div
+            class="details__slide"
+            v-for="(pokemon, index) in pokemon.evolutions"
+            :key="`${pokemon.name}-${index}`"
+            @click="goPokemon(pokemon.id)"
+          >
+            <div class="details__img">
+              <img :src="pokemon.url" :alt="pokemon.name" />
+            </div>
+            <h3 class="details__namePokemon">
+              <span class="details__idSlide">{{ pokemon.id }}</span>
+              <span class="details__nameSlide">{{ toCamelCase(pokemon.name) }}</span>
+            </h3>
+          </div>
+        </j5-carousel>
+      </section>
     </section>
     <section class="details__container" v-else>
       <section class="spinner"></section>
@@ -126,29 +228,45 @@ onBeforeMount(async () => {
 .details {
   max-width: 540px;
   margin: auto;
+  padding: 1em;
 }
-.details svg{
+.details svg {
   fill: var(--color_font);
 }
-.details__goBack {
+.details__goBack,
+.details__arrow,
+.details__container,
+.details__id,
+.details__image,
+.details__types {
   display: flex;
+  align-items: center;
+}
+.details__arrow,
+.details__container,
+.details__image,
+.details__types {
+  justify-content: center;
+}
+.details__goBack,
+.details__slide {
+  cursor: pointer;
+}
+.details__goBack {
+  width: fit-content;
   padding: 0.5em;
   font-size: 1.5em;
-  cursor: pointer;
 }
 .details__textBack {
   margin: 0 0.2em;
+  top: 1px;
 }
 .details__arrow {
   width: 1em;
   height: 1em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .details__container {
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 .details__container .spinner {
   position: absolute;
@@ -159,14 +277,13 @@ onBeforeMount(async () => {
   text-align: center;
   font-size: 2em;
 }
-.details__primary {
+.details__primary,
+.details__textBack {
   position: relative;
 }
 .details__id {
-  display: flex;
   flex-shrink: 0;
   justify-content: flex-end;
-  align-items: center;
   font-size: 1.5em;
 }
 .details__id::before {
@@ -174,21 +291,14 @@ onBeforeMount(async () => {
   margin: 0 0.1em 0 0;
 }
 .details__image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   max-width: 450px;
   margin: auto;
 }
+.details__img > img,
 .details__image > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.details__types {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .details__primary,
 .details__secondary {
@@ -213,9 +323,38 @@ onBeforeMount(async () => {
   margin: 0.5em 0;
   list-style: disclosure-closed;
 }
+.details__carousel {
+  margin: auto;
+}
+.details__slide {
+  min-width: 200px;
+  max-width: 200px;
+  margin: auto;
+}
+.details__namePokemon {
+  text-align: center;
+}
+.details__idSlide::before {
+  content: "#";
+  margin: 0 0.1em 0 0;
+}
+.details__idSlide::after {
+  content: "-";
+  margin: 0 0.2em;
+}
+@media screen and (min-width: 540px) {
+  .details__slide {
+    min-width: 250px;
+    max-width: 250px;
+  }
+}
 @media screen and (min-width: 768px) {
   .details {
     max-width: 768px;
+  }
+  .details__slide {
+    min-width: 300px;
+    max-width: 300px;
   }
 }
 </style>
