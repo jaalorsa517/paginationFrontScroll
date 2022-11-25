@@ -17,26 +17,6 @@ export default defineConfig({
         lang: "es",
         icons: [
           {
-            src: "pwa-16x16.png",
-            sizes: "16x16",
-            type: "image/png",
-          },
-          {
-            src: "pwa-32x32.png",
-            sizes: "32x32",
-            type: "image/png",
-          },
-          {
-            src: "pwa-64x64.png",
-            sizes: "64x6",
-            type: "image/png",
-          },
-          {
-            src: "pwa-150x150.png",
-            sizes: "150x150",
-            type: "image/png",
-          },
-          {
             src: "pwa-192x192.png",
             sizes: "192x192",
             type: "image/png",

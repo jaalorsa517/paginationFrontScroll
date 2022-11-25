@@ -35,7 +35,7 @@ function goDetails() {
     </div>
     <div class="card__img">
       <div class="skeleton card__skeleton card__skeleton--img" v-if="!isLoad"></div>
-      <img :src="info.img" :alt="info.name" loading="lazy" @load="isLoad = true" v-show="isLoad" />
+      <img :src="info.img" :alt="info.name"  @load="isLoad = true" v-show="isLoad" />
     </div>
   </div>
 </template>
