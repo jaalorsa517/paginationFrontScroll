@@ -1,13 +1,15 @@
 <script setup>
 import { ref, watchEffect } from "vue";
-import {colorsType} from "@/js/dictionary";
-import {useRouter} from 'vue-router';
+import { colorsType } from "@/js/dictionary";
+import { useRouter } from "vue-router";
+import { useRoot } from "@/store/useRoot.store";
 
 const props = defineProps({
   info: Object,
 });
 
 const router = useRouter();
+const storeRoot = useRoot();
 
 const isLoad = ref(false);
 const card = ref(null);
@@ -19,6 +21,8 @@ watchEffect(() => {
 });
 
 function goDetails() {
+  const scrollY = window.scrollY;
+  storeRoot.$patch({ scrollY });
   router.push({ name: "Details", params: { id: props.info.id } });
 }
 </script>
@@ -35,7 +39,7 @@ function goDetails() {
     </div>
     <div class="card__img">
       <div class="skeleton card__skeleton card__skeleton--img" v-if="!isLoad"></div>
-      <img :src="info.img" :alt="info.name"  @load="isLoad = true" v-show="isLoad" />
+      <img :src="info.img" :alt="info.name" @load="isLoad = true" v-show="isLoad" />
     </div>
   </div>
 </template>
