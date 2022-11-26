@@ -56,7 +56,7 @@ watchEffect(() => {
 });
 
 function goBack() {
-  router.back();
+  router.push({ name: "Home" });
 }
 async function goPokemon(id) {
   await router.push({ name: "Details", params: { id: id } });
@@ -133,7 +133,7 @@ onBeforeMount(() => {
           </g>
         </svg>
       </span>
-      <span class="details__textBack">Atras</span>
+      <span class="details__textBack">Inicio</span>
     </section>
     <section class="details__main" v-if="isLoaded">
       <div class="details__primary">
