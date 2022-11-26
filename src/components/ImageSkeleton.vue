@@ -42,7 +42,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="skeleton imageSkeleton" v-if="!isLoad" ref="img"></div>
-  <img :class="props.class" :src="props.src" :alt="props.alt" loading="lazy" @load="onLoad" v-show="isLoad" />
+  <img :class="props.class" :src="props.src" :alt="props.alt" @load="onLoad" v-show="isLoad" />
 </template>
 
 <style>
