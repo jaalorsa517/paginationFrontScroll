@@ -253,7 +253,7 @@ onBeforeMount(() => {
   padding: 1em;
 }
 .details svg {
-  fill: var(--color_font);
+  fill: var(--color_font,#2c3e50);
 }
 .details__goBack,
 .details__arrow,
