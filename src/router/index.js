@@ -11,7 +11,7 @@ const routes = [
         component: () => import("@/views/Home.vue"),
       },
       {
-        path: "/:id",
+        path: "/pokemon/:id(\\d+)",
         name: "Details",
         component: () => import("@/views/Details.vue"),
       },
@@ -29,3 +29,10 @@ export const router = createRouter({
     return { top: 0 };
   },
 });
+
+router.beforeEach((to, _, next) => {
+  if (!to.name) {
+    next({ name: "Home" });
+  }
+  next();
+})

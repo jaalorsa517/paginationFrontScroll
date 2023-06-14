@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="js">
 import { onBeforeMount, reactive, computed, ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ImageSkeletonVue from "@/components/ImageSkeleton.vue";
@@ -106,17 +106,21 @@ function getPostEvolutions({ name, url, id, evolutions }, postEvolutions = [], b
 }
 async function init() {
   const id = route.params.id;
-  if (!id) router.push({ name: "Home" });
-  const pokemonInfo = await getPokemonInfo({ id });
-  pokemon.info = pokemonInfo;
-  selectContent("pokemon", pokemon.info.name)
-  const details = await getSpecie({ url: pokemonInfo.speciesUrl });
-  pokemon.specie = details;
-  const evolutions = await getEvolution({ url: details.evolution });
-  const prevolutions = getPrevolution(evolutions);
-  pokemon.prevolutions = prevolutions;
-  const postEvolutions = getPostEvolutions(evolutions);
-  pokemon.evolutions = postEvolutions;
+  if (!id) router.push({name: "Home"});
+  try {
+    const pokemonInfo = await getPokemonInfo({ id });
+    pokemon.info = pokemonInfo;
+    selectContent("pokemon", pokemon.info.name)
+    const details = await getSpecie({ url: pokemonInfo.speciesUrl });
+    pokemon.specie = details;
+    const evolutions = await getEvolution({ url: details.evolution });
+    const prevolutions = getPrevolution(evolutions);
+    pokemon.prevolutions = prevolutions;
+    const postEvolutions = getPostEvolutions(evolutions);
+    pokemon.evolutions = postEvolutions;
+  } catch (error) {
+    router.push({ name: "Home" });
+  }
 }
 
 onBeforeMount(() => {

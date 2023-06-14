@@ -8,8 +8,12 @@ import { useRegisterSW } from "virtual:pwa-register/vue";
 console.log("PRODUCTION:", import.meta.env.PROD);
 if (import.meta.env.PROD)
   useRegisterSW({
-    onNeedRefresh() {},
-    onOfflineReady() {},
+    onNeedRefresh() {
+      console.log("Refresh triggered");
+    },
+    onOfflineReady() {
+      console.log("Offline ready");
+    },
   });
 
 const pinia = createPinia();
