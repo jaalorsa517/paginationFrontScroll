@@ -4,7 +4,8 @@ import { useRoute, useRouter } from "vue-router";
 import ImageSkeletonVue from "@/components/ImageSkeleton.vue";
 import { getEvolution, getPokemonInfo, getSpecie } from "@/shared/services/Pokemon.service";
 import { langagueES } from "@/js/dictionary";
-import { useRoot } from "@/store/useRoot.store";
+import {useRoot} from "@/store/useRoot.store";
+import {selectContent} from "@/shared/services/analytics.services"
 
 const route = useRoute();
 const router = useRouter();
@@ -108,6 +109,7 @@ async function init() {
   if (!id) router.push({ name: "Home" });
   const pokemonInfo = await getPokemonInfo({ id });
   pokemon.info = pokemonInfo;
+  selectContent("pokemon", pokemon.info.name)
   const details = await getSpecie({ url: pokemonInfo.speciesUrl });
   pokemon.specie = details;
   const evolutions = await getEvolution({ url: details.evolution });
@@ -125,12 +127,10 @@ onBeforeMount(() => {
   <section class="details">
     <section class="details__goBack" @click="goBack">
       <span class="details__arrow">
-        <svg viewBox="0 0 500 500">
-          <g>
-            <path
-              d="M487.267,225.981c0-17.365-13.999-31.518-31.518-31.518H194.501L305.35,83.615c12.24-12.24,12.24-32.207,0-44.676 L275.592,9.18c-12.24-12.24-32.207-12.24-44.676,0L15.568,224.527c-6.12,6.12-9.256,14.153-9.256,22.262 c0,8.032,3.136,16.142,9.256,22.262l215.348,215.348c12.24,12.239,32.207,12.239,44.676,0l29.758-29.759 c12.24-12.24,12.24-32.207,0-44.676L194.501,299.498h261.094c17.366,0,31.519-14.153,31.519-31.519L487.267,225.981z"
-            />
-          </g>
+        <svg width="95" height="74" viewBox="0 0 95 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1.46447 33.4645C-0.488155 35.4171 -0.488156 38.5829 1.46447 40.5355L33.2843 72.3553C35.2369 74.308 38.4027 74.308 40.3553 72.3553C42.308 70.4027 42.308 67.2369 40.3553 65.2843L12.0711 37L40.3553 8.71572C42.308 6.7631 42.308 3.59728 40.3553 1.64466C38.4027 -0.307965 35.2369 -0.307966 33.2843 1.64466L1.46447 33.4645ZM95 32L5 32L5 42L95 42L95 32Z"
+            fill="#2C3E50" />
         </svg>
       </span>
       <span class="details__textBack">Inicio</span>
@@ -144,8 +144,7 @@ onBeforeMount(() => {
             :src="pokemon.info.img"
             :alt="pokemon.info.name"
             :width="sizeSkeletonImgPrincipal"
-            :height="sizeSkeletonImgPrincipal"
-          ></ImageSkeletonVue>
+            :height="sizeSkeletonImgPrincipal"></ImageSkeletonVue>
         </div>
         <div class="details__types">
           <div class="details__type" v-for="(type, index) in pokemon.info.types" :key="index" :type="type">
@@ -184,8 +183,7 @@ onBeforeMount(() => {
             <li
               class="details__description"
               v-for="(description, index) in pokemon.specie.features"
-              :key="index"
-            >
+              :key="index">
               {{ description }}
             </li>
           </ul>
@@ -198,15 +196,13 @@ onBeforeMount(() => {
             class="details__slide"
             v-for="(pokemon, index) in pokemon.prevolutions"
             :key="`${pokemon.name}-${index}`"
-            @click="goPokemon(pokemon.id)"
-          >
+            @click="goPokemon(pokemon.id)">
             <div class="details__img">
               <ImageSkeletonVue
                 :src="pokemon.url"
                 :alt="pokemon.name"
                 :width="sizeSkeletonImgCarousel"
-                :height="sizeSkeletonImgCarousel"
-              ></ImageSkeletonVue>
+                :height="sizeSkeletonImgCarousel"></ImageSkeletonVue>
             </div>
             <h3 class="details__namePokemon">
               <span class="details__idSlide">{{ pokemon.id }}</span>
@@ -222,15 +218,13 @@ onBeforeMount(() => {
             class="details__slide"
             v-for="(pokemon, index) in pokemon.evolutions"
             :key="`${pokemon.name}-${index}`"
-            @click="goPokemon(pokemon.id)"
-          >
+            @click="goPokemon(pokemon.id)">
             <div class="details__img">
               <ImageSkeletonVue
                 :src="pokemon.url"
                 :alt="pokemon.name"
                 :width="sizeSkeletonImgCarousel"
-                :height="sizeSkeletonImgCarousel"
-              ></ImageSkeletonVue>
+                :height="sizeSkeletonImgCarousel"></ImageSkeletonVue>
             </div>
             <h3 class="details__namePokemon">
               <span class="details__idSlide">{{ pokemon.id }}</span>

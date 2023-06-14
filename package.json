@@ -1,21 +1,36 @@
 {
-  "name": "paginationfront",
-  "version": "0.0.0",
+  "name": "@jaalorsa/pagination_front",
+  "description": "Proyecto que pretende demostrar las habilidades para maquetar y consumir una API. En este caso, la API de https://pokeapi.co/ y la paginación por infinita por scroll.",
+  "version": "1.0.0",
+  "author": "jaalorsa <jaalorsa517@hotmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "jaalorsa",
+    "vue",
+    "webcomponent",
+    "custom element",
+    "javascript"
+  ],
+  "homepage": "https://pokemons.jaalorsa.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaalorsa517/paginationFrontScroll.git "
+  },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@jaalorsa/j5-components": "^1.5.0",
-    "firebase": "^9.22.1",
-    "pinia": "^2.1.3",
+    "firebase": "^9.22.2",
+    "pinia": "^2.1.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^4.3.9",
-    "vite-plugin-pwa": "^0.16.3"
+    "vite-plugin-pwa": "^0.16.4"
   }
 }

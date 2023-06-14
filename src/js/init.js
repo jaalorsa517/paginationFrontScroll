@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { j5Carousel } from "@jaalorsa/j5-components";
 import { useRoot } from "@/store/useRoot.store";
+import {useFirebaseStore} from '@/store/useFirebase.store';
 
 function initFirebase() {
   const firebaseConfig = {
@@ -15,7 +16,8 @@ function initFirebase() {
   };
 
   const app = initializeApp(firebaseConfig);
-  getAnalytics(app);
+  const analytics = getAnalytics(app);
+  useFirebaseStore().$patch({ analyticsInstance: analytics });
 }
 
 function scrolling({ target }) {

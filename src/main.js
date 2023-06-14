@@ -5,10 +5,11 @@ import { init } from "./js/init";
 import { router } from "./router";
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
-useRegisterSW({
-  onNeedRefresh() {},
-  onOfflineReady() {},
-});
+if (import.meta.env.PROD)
+  useRegisterSW({
+    onNeedRefresh() {},
+    onOfflineReady() {},
+  });
 
 const pinia = createPinia();
 const app = createApp(App);
