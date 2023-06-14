@@ -9,6 +9,7 @@ export default defineConfig({
     VitePWA({
       manifest: {
         name: "Pokemons",
+        id: "com.jaalorsa.pokemons",
         short_name: "Pokemons",
         description: "Lista de pokemons",
         theme_color: "#ffffff",
