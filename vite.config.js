@@ -10,6 +10,7 @@ export default defineConfig({
       manifest: {
         name: "Pokemons",
         id: "com.jaalorsa.pokemons",
+        start_url: "/",
         short_name: "Pokemons",
         description: "Lista de pokemons",
         theme_color: "#ffffff",
