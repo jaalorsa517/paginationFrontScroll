@@ -5,6 +5,8 @@ import { init } from "./js/init";
 import { router } from "./router";
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
+console.log("Inicio web app")
+
 if (import.meta.env.PROD)
   useRegisterSW({
     onNeedRefresh() {
