@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "webpage-7e920"
-  }
+  },
+  "targets": {
+    "webpage-7e920": {
+      "hosting": {
+        "pokemons": [
+          "pokemonspaginationfront"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
