@@ -9,14 +9,9 @@ if (import.meta.env.PROD)
   useRegisterSW({
     onNeedRefresh() {
       console.log("Refresh triggered");
-      const response = window.confirm("Web App está actualizando...\n ¿Desea refrescar?");
-      if (response) {
-        window.location.reload();
-      }
     },
     onOfflineReady() {
       console.log("Offline ready");
-      window.alert("Web App está instalado de manera local para mayor eficiencia.");
     },
   });
 
