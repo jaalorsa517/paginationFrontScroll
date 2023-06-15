@@ -19,13 +19,13 @@ jobs:
           node-version: "16.x"
       - name: set enviroment
         run: |
-          echo 'VITE_FIREBASE_APIKEY=${{secrets.VITE_FIREBASE_APIKEY}}' >> '$GITHUB_ENV'
-          echo 'VITE_FIREBASE_AUTH_DOMAIN=${{vars.VITE_FIREBASE_AUTH_DOMAIN}}' >> '$GITHUB_ENV'
-          echo 'VITE_FIREBASE_PROJECT_ID=${{vars.VITE_FIREBASE_PROJECT_ID}}' >> '$GITHUB_ENV'
-          echo 'VITE_FIREBASE_STORAGE_BUCKET=${{vars.VITE_FIREBASE_STORAGE_BUCKET}}' >> '$GITHUB_ENV'
-          echo 'VITE_FIREBASE_MESSAGING_SENDER_ID=${{vars.VITE_FIREBASE_MESSAGING_SENDER_ID}}' >> '$GITHUB_ENV'
-          echo 'VITE_FIREBASE_APP_ID=${{vars.VITE_FIREBASE_APP_ID}}' >> '$GITHUB_ENV'
-          echo 'VITE_FIREBASE_MEASUREMENT_ID=${{vars.VITE_FIREBASE_MEASUREMENT_ID}}' >> '$GITHUB_ENV'
+          echo 'VITE_FIREBASE_APIKEY=${{secrets.VITE_FIREBASE_APIKEY}}' >> $GITHUB_ENV
+          echo 'VITE_FIREBASE_AUTH_DOMAIN=${{vars.VITE_FIREBASE_AUTH_DOMAIN}}' >> $GITHUB_ENV
+          echo 'VITE_FIREBASE_PROJECT_ID=${{vars.VITE_FIREBASE_PROJECT_ID}}' >> $GITHUB_ENV
+          echo 'VITE_FIREBASE_STORAGE_BUCKET=${{vars.VITE_FIREBASE_STORAGE_BUCKET}}' >> $GITHUB_ENV
+          echo 'VITE_FIREBASE_MESSAGING_SENDER_ID=${{vars.VITE_FIREBASE_MESSAGING_SENDER_ID}}' >> $GITHUB_ENV
+          echo 'VITE_FIREBASE_APP_ID=${{vars.VITE_FIREBASE_APP_ID}}' >> $GITHUB_ENV
+          echo 'VITE_FIREBASE_MEASUREMENT_ID=${{vars.VITE_FIREBASE_MEASUREMENT_ID}}' >> $GITHUB_ENV
       - run: npm ci
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
