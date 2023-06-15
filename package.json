@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "firebase deploy --only hosting:pokemons"
   },
   "dependencies": {
     "@jaalorsa/j5-components": "^1.5.0",
