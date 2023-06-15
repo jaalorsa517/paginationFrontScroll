@@ -5,13 +5,15 @@ import { init } from "./js/init";
 import { router } from "./router";
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
+console.log("Inicio web app")
+
 if (import.meta.env.PROD)
   useRegisterSW({
     onNeedRefresh() {
-      console.log("Refresh triggered");
+      console.log("Reiniciar el navegador");
     },
     onOfflineReady() {
-      console.log("Offline ready");
+      console.log("Web app está disponible offline");
     },
   });
 
