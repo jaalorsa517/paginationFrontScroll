@@ -6,6 +6,6 @@ export function selectContent(type, id) {
   const analytics = firebaseStore.analyticsInstance;
   logEvent(analytics, "select_content", {
     content_type: type,
-    item_id: id,
+    content_id: id,
   });
 }
