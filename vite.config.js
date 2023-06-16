@@ -35,6 +35,8 @@ export default defineConfig({
         clientsClaim: true,
         skipWaiting: true,
         sourcemap: true,
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,xml,txt}"],
+        offlineGoogleAnalytics: true,
         runtimeCaching: [
           {
             urlPattern:

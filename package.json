@@ -20,7 +20,7 @@
     "dev": "vite --host",
     "build": "vite build --mode production",
     "preview": "vite preview",
-    "deploy": "firebase deploy --only hosting:pokemons"
+    "deploy": "npm run build && firebase deploy --only hosting:pokemons"
   },
   "dependencies": {
     "@jaalorsa/j5-components": "^1.5.0",
