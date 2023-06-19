@@ -70,6 +70,15 @@ export default defineConfig({
       },
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @import "@/style/mixins.scss";
+            `,
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": "/src",
