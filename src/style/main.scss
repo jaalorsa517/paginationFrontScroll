@@ -5,6 +5,28 @@
 }
 body {
   --color_font: #2c3e50;
+  --font-size: 16px;
+  --font-size-title: calc(var(--font-size) * 1.5);
+  --font-size-subtitle: calc(var(--font-size) * 1.25);
+  --font-principal: "Archivo", sans-serif;
+  --font-title: "Playfair Display", serif;
+  --font-cursive: "Aref Ruqaa", serif;
+  --color-primary: #008937;
+  --color-second: #8dc124;
+  --color-third: #438c40;
+  --color-white: #fff;
+  --color-font-light: #f9f9f9;
+  --color-gray: #bfbfbf;
+  --color-gray-light: #dfeedc;
+  --color-gray-dark: #7f7f7f;
+  --color-font-dark: #252525;
+  --color-error: #a11616;
+  --color-font-dark-50: rgba(37, 37, 37, 0.5);
+  --color-font-dark-80: rgba(37, 37, 37, 0.8);
+  --base: 10px;
+  --shadow: 0 4 4 #00000025;
+  --radius-button: 15px;
+  --height-fixed: 3.4375em;
 }
 
 #app {
@@ -118,4 +140,30 @@ body {
 }
 [type="undefined"] {
   background-color: #2c3e50;
+}
+
+button,
+.button {
+  padding: 0.1875em 0.3125em;
+  min-width: 100px;
+  font-size: 0.9375em;
+  color: var(--color-white);
+  outline: none;
+  background-color: var(--color-third);
+  border: 1px solid var(--color-third);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    border-color: var(--color-third);
+    background-color: var(--color-white);
+    color: var(--color-third);
+  }
+  &:active {
+    border-color: var(--color-third);
+    background-color: var(--color-third);
+  }
+  @include tabletWidth() {
+    padding: 0.6125em;
+  }
 }
