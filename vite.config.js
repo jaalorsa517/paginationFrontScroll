@@ -9,6 +9,7 @@ export default defineConfig({
     VitePWA({
       manifest: {
         name: "Pokemons",
+        includeAssets: ["favicon.svg", "favicon.ico", "robots.txt", "sitemap.xml", "apple-touch-icon.png"],
         id: "com.jaalorsa.pokemons",
         start_url: "/",
         short_name: "Pokemons",
@@ -27,14 +28,14 @@ export default defineConfig({
             src: "pwa-512x512.png",
             sizes: "512x512",
             type: "image/png",
-          }
+          },
         ],
       },
       workbox: {
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        skipWaiting: true,
-        sourcemap: true,
+        skipWaiting: false,
+        sourcemap: false,
         globPatterns: ["**/*.{js,css,html,ico,png,svg,xml,txt}"],
         offlineGoogleAnalytics: true,
         runtimeCaching: [
