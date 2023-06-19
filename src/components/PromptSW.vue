@@ -33,7 +33,7 @@ const close = async () => {
   z-index: 10000;
   text-align: left;
   box-shadow: 3px 4px 5px 0 #8885;
-  background-color: var(--color-white);
+  background-color: var(--color-white, #fff);
   &__message {
     margin-bottom: 8px;
     text-align: center;
