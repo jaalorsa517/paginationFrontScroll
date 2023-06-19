@@ -6,6 +6,7 @@ import { getEvolution, getPokemonInfo, getSpecie } from "@/shared/services/Pokem
 import { langagueES } from "@/js/dictionary";
 import {useRoot} from "@/store/useRoot.store";
 import {selectContent} from "@/shared/services/analytics.services"
+import{ ANALYTICS } from "@/shared/constants"
 
 const route = useRoute();
 const router = useRouter();
@@ -110,7 +111,7 @@ async function init() {
   try {
     const pokemonInfo = await getPokemonInfo({ id });
     pokemon.info = pokemonInfo;
-    selectContent("pokemon", pokemon.info.name)
+    selectContent(ANALYTICS.ORIGIN_POKEMON, pokemon.info.name)
     const details = await getSpecie({ url: pokemonInfo.speciesUrl });
     pokemon.specie = details;
     const evolutions = await getEvolution({ url: details.evolution });
