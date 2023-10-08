@@ -1,3 +1,5 @@
+[![deploy](https://github.com/jaalorsa517/paginationFrontScroll/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main&event=push)](https://github.com/jaalorsa517/paginationFrontScroll/actions/workflows/firebase-hosting-merge.yml)
+
 # Pokemon
 
 ## Descripción
