@@ -1,6 +1,7 @@
 <script setup lang="js">
 import { onBeforeMount, reactive, computed, ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { J5VIcons } from "@jaalorsa/j5-components-vue"
 import ImageSkeletonVue from "@/components/ImageSkeleton.vue";
 import { getEvolution, getPokemonInfo, getSpecie } from "@/shared/services/Pokemon.service";
 import { langagueES } from "@/js/dictionary";
@@ -132,11 +133,7 @@ onBeforeMount(() => {
   <section class="details">
     <section class="details__goBack" @click="goBack">
       <span class="details__arrow">
-        <svg width="95" height="74" viewBox="0 0 95 74" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M1.46447 33.4645C-0.488155 35.4171 -0.488156 38.5829 1.46447 40.5355L33.2843 72.3553C35.2369 74.308 38.4027 74.308 40.3553 72.3553C42.308 70.4027 42.308 67.2369 40.3553 65.2843L12.0711 37L40.3553 8.71572C42.308 6.7631 42.308 3.59728 40.3553 1.64466C38.4027 -0.307965 35.2369 -0.307966 33.2843 1.64466L1.46447 33.4645ZM95 32L5 32L5 42L95 42L95 32Z"
-            fill="#2C3E50" />
-        </svg>
+        <J5VIcons name="arrow_back"/>
       </span>
       <span class="details__textBack">Inicio</span>
     </section>
@@ -156,6 +153,9 @@ onBeforeMount(() => {
             {{ translateType(type) }}
           </div>
         </div>
+      </div>
+      <div class="details__subtitle">
+        <h2>Detalles</h2>
       </div>
       <div class="details__secondary">
         <div class="details__detail">
@@ -246,6 +246,8 @@ onBeforeMount(() => {
 </template>
 
 <style>
+@import "@jaalorsa/j5-components-vue/style.css";
+
 .details {
   max-width: 540px;
   margin: auto;
@@ -298,6 +300,10 @@ onBeforeMount(() => {
   text-align: center;
   font-size: 2em;
 }
+.details__subtitle h2{
+  text-align: center;
+  font-size: 1.5em;
+}
 .details__primary,
 .details__textBack {
   position: relative;
@@ -333,6 +339,7 @@ onBeforeMount(() => {
   color: var(--color_font);
   font-size: 1.1em;
   font-weight: 700;
+  font-family: inherit;
 }
 .details__label::after {
   content: ":";
