@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "jaalorsa <jaalorsa517@hotmail.com>",
   "license": "MIT",
+  "type": "module",
   "keywords": [
     "jaalorsa",
     "vue",
@@ -24,15 +25,16 @@
   },
   "dependencies": {
     "@jaalorsa/j5-components": "^1.5.3",
-    "firebase": "^10.4.0",
-    "pinia": "^2.1.6",
-    "vue": "^3.3.4",
+    "@jaalorsa/j5-components-vue": "^2.1.0",
+    "firebase": "^10.7.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.4",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.4.0",
-    "sass": "^1.69.0",
-    "vite": "^4.4.11",
-    "vite-plugin-pwa": "^0.16.5"
+    "@vitejs/plugin-vue": "^5.0.2",
+    "sass": "^1.69.7",
+    "vite": "^5.0.10",
+    "vite-plugin-pwa": "^0.17.4"
   }
 }

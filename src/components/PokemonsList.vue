@@ -11,7 +11,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <h2 class="app__title">Pokemons</h2>
+  <h2 class="app__title">Pokemon</h2>
   <div class="app__view">
     <cardPokemon v-for="pokemon in pokemonStore.pokemons" :key="pokemon.name" :info="pokemon" />
   </div>
