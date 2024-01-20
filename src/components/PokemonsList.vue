@@ -2,7 +2,8 @@
 import { onBeforeMount, provide } from "vue";
 import cardPokemon from "@/components/Card.vue";
 import { usePokemon } from "@/store/usePokemon.store";
-import { J5VIcons } from "@jaalorsa/j5-components-vue"
+import Filter from "@/components/Filter.vue"
+import Find from "@/components/Find.vue"
 
 const pokemonStore = usePokemon();
 
@@ -15,14 +16,8 @@ onBeforeMount(() => {
 <template>
   <h2 class="app__title">Pokemon</h2>
   <div class="app__filter">
-    <div class="app__filterItem">
-      <J5VIcons name="find" />
-      <span>Buscar</span>
-    </div>
-    <div class="app__filterItem">
-      <J5VIcons name="filter" />
-      <span>Filtrar</span>
-    </div>
+    <Find />
+    <Filter />
   </div>
 
   <div class="app__view">
@@ -64,15 +59,16 @@ onBeforeMount(() => {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 5px;
     padding: 5px 10px;
     cursor: pointer;
     user-select: none;
     transition: color 0.3s ease;
-    &:hover{
+
+    &:hover {
       color: var(--color-primary);
     }
+
     & .j5v-icons {
       width: 20px;
       display: block;
