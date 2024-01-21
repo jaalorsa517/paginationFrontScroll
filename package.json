@@ -1,7 +1,7 @@
 {
   "name": "@jaalorsa/pagination_front",
   "description": "Proyecto que pretende demostrar las habilidades para maquetar y consumir una API. En este caso, la API de https://pokeapi.co/ y la paginación por infinita por scroll.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "jaalorsa <jaalorsa517@hotmail.com>",
   "license": "MIT",
   "type": "module",
