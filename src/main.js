@@ -4,6 +4,7 @@ import { createPinia } from "pinia";
 import { init } from "./js/init";
 import { router } from "./router";
 import { useRegisterSW } from "virtual:pwa-register/vue";
+import "@jaalorsa/j5-components-vue/style.css"
 
 if (import.meta.env.PROD)
   useRegisterSW({

@@ -42,5 +42,28 @@ export const langagueES = {
   fairy: "hada",
   unknown: "desconocido",
   shadow: "sombra",
-  undefined: "desconocido",
+  undefined: "indefinido",
+};
+
+export const langagueESInvertido = {
+  normal: "normal",
+  lucha: "fighting",
+  volador: "flying",
+  veneno: "poison",
+  tierra: "ground",
+  roca: "rock",
+  bicho: "bug",
+  fantasma: "ghost",
+  acero: "steel",
+  fuego: "fire",
+  agua: "water",
+  planta: "grass",
+  electrico: "electric",
+  psiquico: "psychic",
+  hielo: "ice",
+  dragon: "dragon",
+  siniestro: "dark",
+  hada: "fairy",
+  desconocido: "unknown",
+  sombra: "shadow"
 };

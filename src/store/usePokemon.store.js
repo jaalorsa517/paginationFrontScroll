@@ -1,6 +1,11 @@
 import { defineStore } from "pinia";
 import { pokemonCardDtoDefault } from "@/shared/serializers/pokemon.dto";
-import { getPokemonsInfo, getSkip, getPokemonsRaw } from "@/shared/services/Pokemon.service";
+import {
+  getPokemonsInfo,
+  getSkip,
+  getPokemonsRaw,
+  getPokemonType,
+} from "@/shared/services/Pokemon.service";
 
 export const usePokemon = defineStore("pokemons", {
   state: () => ({
@@ -10,6 +15,11 @@ export const usePokemon = defineStore("pokemons", {
     hasMore: false,
     isLoading: false,
   }),
+  getters: {
+    getpokemons() {
+      return this.pokemons;
+    },
+  },
   actions: {
     async moreData() {
       this.page++;
@@ -17,7 +27,7 @@ export const usePokemon = defineStore("pokemons", {
     },
     async firtsFetchPokemons() {
       this.page = 0;
-      this.pokemons = [];
+      this.pokemons.splice(0);
       await this.fetchPokemons();
     },
     async fetchPokemons() {
@@ -25,12 +35,28 @@ export const usePokemon = defineStore("pokemons", {
         this.isLoading = true;
         const pokemonsRaw = await getPokemonsRaw({ page: this.page });
         this.hasMore = pokemonsRaw.count > getSkip(this.page);
-        const promisesGetPokemon = await getPokemonsInfo({ urls: pokemonsRaw.results });
+        const promisesGetPokemon = await getPokemonsInfo({
+          urls: pokemonsRaw.results,
+        });
         this.isLoading = false;
-        this.pokemons = [...this.pokemons, ...promisesGetPokemon];
+        this.pokemons.push(...promisesGetPokemon);
       } catch (error) {
         this.isLoading = false;
         return [];
+      }
+    },
+    async fetchTypes(type) {
+      try {
+        this.pokemons.splice(0);
+        this.isLoading = true;
+        const pokemonsRaw = await getPokemonType({ type });
+        const promisesGetPokemon = await getPokemonsInfo({ urls: pokemonsRaw });
+        this.isLoading = false;
+        this.hasMore = false;
+        this.pokemons.push(...promisesGetPokemon);
+      } catch (error) {
+        this.isLoading = false;
+        this.pokemons = [];
       }
     },
   },

@@ -1,7 +1,7 @@
 {
   "name": "@jaalorsa/pagination_front",
   "description": "Proyecto que pretende demostrar las habilidades para maquetar y consumir una API. En este caso, la API de https://pokeapi.co/ y la paginación por infinita por scroll.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "jaalorsa <jaalorsa517@hotmail.com>",
   "license": "MIT",
   "type": "module",
@@ -25,16 +25,16 @@
   },
   "dependencies": {
     "@jaalorsa/j5-components": "^1.5.3",
-    "@jaalorsa/j5-components-vue": "^2.1.0",
-    "firebase": "^10.7.1",
+    "@jaalorsa/j5-components-vue": "^2.1.1",
+    "firebase": "^10.7.2",
     "pinia": "^2.1.7",
-    "vue": "^3.4.4",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.2",
-    "sass": "^1.69.7",
-    "vite": "^5.0.10",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "sass": "^1.70.0",
+    "vite": "^5.0.12",
     "vite-plugin-pwa": "^0.17.4"
   }
 }
