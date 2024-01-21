@@ -14,10 +14,12 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <h2 class="app__title">Pokemon</h2>
-  <div class="app__filter">
-    <Find />
-    <Filter />
+  <div class="app__header">
+    <h2 class="app__title">Pokemon</h2>
+    <div class="app__filter">
+      <Find />
+      <Filter />
+    </div>
   </div>
 
   <div class="app__view">
@@ -34,6 +36,15 @@ onBeforeMount(() => {
 
 <style lang="scss">
 .app {
+  &__header{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-white);
+    box-shadow: 1px 1px var(--color-gray-light);
+    z-index: 200;
+  }
+
   &__view {
     display: flex;
     flex-wrap: wrap;

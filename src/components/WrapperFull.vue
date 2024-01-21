@@ -1,4 +1,5 @@
 <script setup>
+import { watch } from "vue"
 import { J5VIcons } from "@jaalorsa/j5-components-vue"
 
 const props = defineProps({
@@ -9,6 +10,14 @@ const props = defineProps({
   title:{
     type: String,
     default: ""
+  }
+})
+
+watch(()=> props.isOpen, (value) => {
+  if (value) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
   }
 })
 
