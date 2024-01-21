@@ -1,16 +1,17 @@
 <script setup>
 import { reactive, ref } from "vue"
+import { useRouter } from "vue-router"
 import { J5VIcons } from "@jaalorsa/j5-components-vue"
 import { J5VDatalist } from "@jaalorsa/j5-components-vue"
 import WrapperFull from "./WrapperFull.vue";
 import { getPokemonInfo } from "@/shared/services/Pokemon.service"
 import { useRoot } from "@/store/useRoot.store"
-import { router } from "@/router"
 import { insertIntoArray } from "@/shared/services/utils.services"
 
 const isOpen = ref(false);
 const options = reactive([])
 const storeRoot = useRoot();
+const router = useRouter();
 
 function onInputValue(value) {
   options.splice(0)

@@ -1,4 +1,8 @@
-import { pokemonCardDto, pokemonEvolutionDTO, pokemonSpecieDTO } from "@/shared/serializers/pokemon.dto";
+import {
+  pokemonCardDto,
+  pokemonEvolutionDTO,
+  pokemonSpecieDTO,
+} from "@/shared/serializers/pokemon.dto";
 import { httpGet } from "@/shared/services/Http.services";
 
 // evolution-chain/
@@ -39,4 +43,10 @@ export async function getSpecie({ url }) {
 export async function getEvolution({ url }) {
   const evolution = await httpGet(url);
   return pokemonEvolutionDTO(evolution);
+}
+
+export async function getPokemonType({ type }) {
+  const url = `${uri}/type/${type}`;
+  const response = await httpGet(url);
+  return response.pokemon.map(({ pokemon }) => ({ url: pokemon.url }));
 }

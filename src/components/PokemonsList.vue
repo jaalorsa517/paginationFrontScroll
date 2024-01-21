@@ -1,13 +1,32 @@
 <script setup>
-import { onBeforeMount, provide } from "vue";
+import { onBeforeMount, watch } from "vue";
 import cardPokemon from "@/components/Card.vue";
 import { usePokemon } from "@/store/usePokemon.store";
 import Filter from "@/components/Filter.vue"
 import Find from "@/components/Find.vue"
 
+const props = defineProps({
+  query: {
+    type: String,
+    default: "",
+  },
+});
+
 const pokemonStore = usePokemon();
 
+watch(()=>props.query, (value) => {
+  if(value){
+    pokemonStore.fetchTypes(value)
+    return
+  }
+  pokemonStore.firtsFetchPokemons();
+})
+
 onBeforeMount(() => {
+  if(props.query){
+    pokemonStore.fetchTypes(props.query)
+    return
+  }
   if (pokemonStore.pokemons.length <= 20) pokemonStore.firtsFetchPokemons();
 });
 
@@ -18,12 +37,12 @@ onBeforeMount(() => {
     <h2 class="app__title">Pokemon</h2>
     <div class="app__filter">
       <Find />
-      <Filter />
+      <Filter :hasFilter="Boolean(props.query)"/>
     </div>
   </div>
 
   <div class="app__view">
-    <cardPokemon v-for="pokemon in pokemonStore.pokemons" :key="pokemon.name" :info="pokemon" />
+    <cardPokemon v-for="pokemon in pokemonStore.getpokemons" :key="pokemon.name" :info="pokemon" />
   </div>
   <div class="app__container">
     <div class="spinner" v-if="pokemonStore.isLoading"></div>

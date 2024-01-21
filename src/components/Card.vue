@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 import { colorsType } from "@/js/dictionary";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useRoot } from "@/store/useRoot.store";
 
 const props = defineProps({
@@ -9,6 +9,7 @@ const props = defineProps({
 });
 
 const router = useRouter();
+const route = useRoute()
 const storeRoot = useRoot();
 
 const isLoad = ref(false);
@@ -23,7 +24,7 @@ watchEffect(() => {
 function goDetails() {
   const scrollY = window.scrollY;
   storeRoot.$patch({ scrollY });
-  router.push({ name: "Details", params: { id: props.info.id } });
+  router.push({ name: "Details", params: { id: props.info.id  }, query: route.query });
 }
 </script>
 
@@ -56,41 +57,49 @@ function goDetails() {
   transition: border 600ms;
   cursor: pointer;
 }
+
 .card__details {
   position: relative;
 }
+
 .card__img {
   width: 80%;
   max-height: 100%;
   margin: 5px auto;
 }
+
 .card__img img {
   width: 100%;
   height: 100%;
 }
+
 .card__name {
   text-transform: capitalize;
   font-weight: bold;
 }
+
 .card__skeleton {
   border-radius: 5px;
 }
+
 .card__skeleton--img {
   width: 240px;
   height: 240px;
 }
+
 .card__skeleton--txt {
   width: 100px;
   height: 15px;
   margin: auto;
   text-align: center;
 }
+
 .card__skeleton--number {
   width: 40px;
   height: 15px;
 }
+
 .card__number {
   position: absolute;
   left: 0;
-}
-</style>
+}</style>
