@@ -16,7 +16,7 @@ const router = useRouter();
 function onInputValue(value) {
   options.splice(0)
   options.push("Buscando...")
-  getPokemonInfo({ id: value })
+  getPokemonInfo({ id: value.toLocaleLowerCase() })
     .then(
       (pokemon) => {
         options.splice(0)
