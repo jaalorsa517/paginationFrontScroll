@@ -1,4 +1,4 @@
-import { logEvent } from "@firebase/analytics";
+import { logEvent } from "firebase/analytics";
 import { useFirebaseStore } from "@/store/useFirebase.store";
 
 function getInstanceGA() {

@@ -12,5 +12,5 @@ const PromptSW = import.meta.env.PROD
 </template>
 
 <style lang="scss">
-@import "@/style/main";
+@use "@/style/main";
 </style>

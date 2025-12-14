@@ -21,20 +21,21 @@
     "dev": "vite --host",
     "build": "vite build --mode production",
     "preview": "vite preview",
-    "deploy": "npm run build && firebase deploy --only hosting:pokemons"
+    "deploy": "pnpm build && firebase deploy --only hosting:pokemons"
   },
   "dependencies": {
     "@jaalorsa/j5-components": "^2.0.1",
     "@jaalorsa/j5-components-vue": "^2.1.4",
-    "firebase": "^10.14.1",
-    "pinia": "^2.2.4",
-    "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "firebase": "^12.6.0",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.4",
+    "workbox-window": "^7.4.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.4",
-    "sass": "^1.80.3",
-    "vite": "^5.4.9",
-    "vite-plugin-pwa": "^0.20.5"
+    "@vitejs/plugin-vue": "^6.0.3",
+    "sass": "^1.96.0",
+    "vite": "^7.2.7",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }

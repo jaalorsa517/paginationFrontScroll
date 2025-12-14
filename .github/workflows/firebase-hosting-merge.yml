@@ -13,10 +13,14 @@ jobs:
       name: pokemons
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
+          cache: 'pnpm'
       - name: set enviroment
         run: |
           echo 'VITE_FIREBASE_APIKEY=${{secrets.VITE_FIREBASE_APIKEY}}' >> $GITHUB_ENV
@@ -27,9 +31,9 @@ jobs:
           echo 'VITE_FIREBASE_APP_ID=${{vars.VITE_FIREBASE_APP_ID}}' >> $GITHUB_ENV
           echo 'VITE_FIREBASE_MEASUREMENT_ID=${{vars.VITE_FIREBASE_MEASUREMENT_ID}}' >> $GITHUB_ENV
       - name: install dependencies
-        run: npm ci
+        run: pnpm install
       - name: build project
-        run: npm run build
+        run: pnpm build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
