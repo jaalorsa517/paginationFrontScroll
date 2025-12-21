@@ -1,10 +1,12 @@
-[![deploy](https://github.com/jaalorsa517/paginationFrontScroll/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main&event=push)](https://github.com/jaalorsa517/paginationFrontScroll/actions/workflows/firebase-hosting-merge.yml)
+[![deploy](https://github.com/jaalorsa517/pokemon-jaalorsa/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main&event=push)](https://github.com/jaalorsa517/pokemon-jaalorsa/actions/workflows/firebase-hosting-merge.yml)
 
 # Pokemon
 
 ## Descripción
 
-Proyecto que pretende demostrar las habilidades para maquetar y consumir una API. En este caso, la API de [Pokemon](https://pokeapi.co/) y la paginación por infinita por scroll.
+Una experiencia interactiva diseñada para explorar el universo Pokémon. Este proyecto fue creado con el corazón, inspirado en mi hijo, buscando ofrecer un espacio de entretenimiento digital.
+
+A nivel técnico, demuestra la integración eficiente con la API de [Pokemon](https://pokeapi.co/) implementando paginación infinita por scroll.
 
 ## Demo
 
